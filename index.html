@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>指數與對數函數｜基本題複習</title>
+<style>
+:root{--bg:#f6f8f7;--card:#fff;--tx:#1d2b27;--mu:#5d6d68;--ac:#0a9b82;--ac2:#e3f5f1;--bd:#d5e0dc;--ok:#1b8a4b;--no:#c4552b;--no2:#fdeee7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121917;--card:#1c2723;--tx:#e6f0ed;--mu:#9bb0a9;--ac:#3ccfb2;--ac2:#1d3a34;--bd:#2f423c;--ok:#5fd68d;--no:#ff9a6e;--no2:#3a2619}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.7 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
+header{padding:18px 16px 8px;max-width:760px;margin:auto}
+h1{font-size:22px;margin:0 0 4px}header p{margin:0;color:var(--mu);font-size:14px}
+.bar{height:10px;background:var(--bd);border-radius:6px;margin:12px 0 4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac);width:0;transition:.3s}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;max-width:760px;margin:8px auto;padding:0 16px}
+.tabs button{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:6px 14px;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{max-width:760px;margin:auto;padding:0 16px 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;margin:12px 0}
+.card.s1{border-left:6px solid var(--ok)}.card.s2{border-left:6px solid var(--no)}
+.u{display:inline-block;background:var(--ac2);color:var(--ac);font-size:12px;border-radius:6px;padding:0 8px;margin-right:6px}
+h2{font-size:18px;margin:0 0 6px}
+.k{background:var(--ac2);border-radius:10px;padding:8px 12px;margin:8px 0}
+.q{margin:8px 0 2px}.lab{font-weight:700;color:var(--ac);font-size:13px}
+details{margin:2px 0 8px}summary{cursor:pointer;color:var(--ac);font-size:14px}
+.a{background:var(--bg);border-radius:8px;padding:6px 10px;margin-top:4px}
+.st{display:flex;gap:8px;margin-top:10px}
+.st button{flex:1;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:8px;font-size:14px;cursor:pointer}
+.st .g.on{background:var(--ok);color:#fff;border-color:var(--ok)}.st .r.on{background:var(--no);color:#fff;border-color:var(--no)}
+.empty{text-align:center;color:var(--mu);padding:30px}
+</style></head><body>
+<header><h1>📘 指數與對數函數｜基本題複習</h1>
+<p>步驟：①看重點 → ②先自己算例題再看解 → ③做隨堂練習 → ④誠實按「懂了」或「再看看」。</p>
+<div class="bar"><i id="pb"></i></div><p id="pt"></p></header>
+<div class="tabs" id="tabs"></div><main id="m"></main>
+<script>
+const C=[
+{u:'2-1',t:'指數型成長 vs 線性成長',k:'x 每增加 1：函數值「乘固定倍數」→指數型成長；「加固定的數」→線性成長。',
+e:{q:'f(x)：x=0,1,2,3 時為 10,20,40,80。是哪一種成長？',a:'每次都 ×2（等比）→ 指數型成長，f(x)=10·2^{x}。'},
+p:[{q:'g(x)：100,120,144,172.8；f(x)：0.3,15.3,30.3,45.3。何者是指數型成長？',a:'g。120÷100=144÷120=1.2（等比）；f 每次 +15（等差）是線性。'}]},
+{u:'2-1',t:'指數函數 f(x)=a^{x} 的圖形性質',k:'a>0 且 a≠1。圖形都在 x 軸上方、過 (0,1)。\na>1：左下→右上（嚴格遞增）；0<a<1：左上→右下（嚴格遞減）。\na^{x} 與 a^{-x} 的圖形對稱 y 軸；圖形凹口向上；任一水平線 y=b(b>0) 恰交一點。',
+e:{q:'圖中 y=a^{x}, b^{x}, c^{x}, d^{x}，比較 a,b,c,d 與 1。',a:'畫直線 x=1，交點的 y 坐標就是底數。結果 b<a<1<d<c。'},
+p:[{q:'f(x)=3^{x}，哪些正確？(A)f(3)>f(π) (B)任何水平線都與圖形有交點 (C)與 (1/3)^{x} 對稱 y 軸 (D)任兩點斜率為正 (E)鉛直線只交一點',a:'答案 CDE。(A)3<π 且遞增，所以 f(3)<f(π)；(B)y≤0 的水平線沒有交點。'}]},
+{u:'2-1',t:'比較指數的大小',k:'步驟：①化成同底數 ②看底數：a>1 指數大則值大；0<a<1 指數大則值小。',
+e:{q:'比較 a=√0.5，b=(0.25)^{1.1}，c=(0.5)^{3}，d=4。',a:'全化成 0.5 的次方：a=0.5^{1/2}，b=0.5^{2.2}，c=0.5^{3}，d=0.5^{-2}。底數<1 遞減，指數越大越小：d>a>b>c。'},
+p:[{q:'比較 a=0.9^{0.3}，b=0.9^{1/3}，c=0.9^{0.2}。',a:'底數 0.9<1 遞減，指數 0.2<0.3<1/3，所以 c>a>b。'}]},
+{u:'2-1',t:'按比例成長：g(x)=c·a^{x}',k:'c 是初始值（x=0 時的值）。g(x)=c·a^{x} 的圖形是 a^{x} 鉛直伸縮 c 倍。\n半衰期 T：f(x)=k·(1/2)^{x/T}。加倍期 T：f=k·2^{x/T}。',
+e:{q:'每 24 個月加倍，起初 1000 個，t 個月後 f(t)=？',a:'經過 t/24 次加倍：f(t)=1000×2^{t/24}。'},
+p:[{q:'大腸桿菌每 20 分鐘變 2 倍，起初 10^{3} 個，t 分鐘後 f(t)=？',a:'f(t)=10^{3}×2^{t/20}。'},{q:'藥物最大濃度 10 mg/L，半衰期 3 小時，12 小時後濃度？',a:'12÷3=4 次半衰期：10×(1/2)^{4}=0.625 mg/L。'},{q:'f(x)=(0.7)^{x} 鉛直伸縮幾倍得 0.5·(0.7)^{x}？',a:'0.5 倍。'}]},
+{u:'2-1',t:'解指數方程式與不等式',k:'方程式：化成同底，指數相等。若是 t=a^{x} 的二次式，先令 t，記得 t>0。\n不等式：化同底後看底數——a>1 不等號方向不變；0<a<1 不等號要反向。',
+e:{q:'解 (1/4)^{x}=(1/2)^{x-1}；解 2^{2x}<8。',a:'(1/2)^{2x}=(1/2)^{x-1} → 2x=x-1 → x=-1。\n2^{2x}<2^{3}，底數>1 → 2x<3 → x<3/2。'},
+p:[{q:'解 5^{x-8}=(√5)^{x}',a:'5^{x-8}=5^{x/2} → x-8=x/2 → x=16。'},{q:'解 (2^{x}+5)(2^{x}-8)=0',a:'2^{x}+5>0 不可能為 0，所以 2^{x}=8 → x=3。'},{q:'解 5^{x}>1/25；(1/4)^{x}>1/256',a:'5^{x}>5^{-2} → x>-2。\n(1/4)^{x}>(1/4)^{4}，底數<1 反向 → x<4。'}]},
+{u:'2-2',t:'對數的定義',k:'b=a^{t}　⟺　t=log_{a}b（a>0, a≠1, b>0）。\nlog_{a}a=1，log_{a}1=0，a^{log_{a}b}=b。\n口訣：「a 的幾次方等於 b？」答案就是 log_{a}b。',
+e:{q:'求 log_{1/2}8、log_{9}27。',a:'8=(1/2)^{-3} → -3。\n27=3^{3}=(9^{1/2})^{3}=9^{3/2} → 3/2。'},
+p:[{q:'求 log_{7}49；log_{2}2^{0.3}；log_{5}(1/(5√5))',a:'2；0.3；5√5=5^{3/2}，倒數是 5^{-3/2} → -3/2。'},{q:'x=log_{5}7，求 5^{x}、(1/25)^{x}、(√5)^{x}。',a:'5^{x}=7；(1/25)^{x}=(5^{x})^{-2}=1/49；(√5)^{x}=(5^{x})^{1/2}=√7。'}]},
+{u:'2-2',t:'常用對數的對數律',k:'x,y>0：\nlog x+log y=log(xy)\nlog x−log y=log(x/y)\nlog x^{r}=r·log x\n（加→乘、減→除、係數→次方）',
+e:{q:'求 log6+log50−log3。',a:'log(6×50÷3)=log100=2。'},
+p:[{q:'log7+log8−log4=log x，求 x。',a:'log(7×8÷4)=log14，x=14。'},{q:'3log k−2log(k+1)+log4=log y，用 k 表示 y。',a:'y=k^{3}·4/(k+1)^{2}。'},{q:'芮氏規模 5.5 地震能量是 3.5 的幾倍？(logE=11.8+1.5M)',a:'差 2 → 10^{1.5×2}=10^{3}=1000 倍。'}]},
+{u:'2-2',t:'換底公式',k:'log_{a}b = log b ÷ log a。\n換底後可合併：log_{a}b·log_{b}c=log_{a}c；1/log_{a}b=log_{b}a。計算機按 log 再相除即可。',
+e:{q:'化簡 log_{3}7+log_{3}10−log_{3}2。',a:'同底直接用對數律：log_{3}(7×10÷2)=log_{3}35。'},
+p:[{q:'用一個對數表示 log_{2}5×log_{5}3；及 1/log_{3}7+1/log_{5}7',a:'log_{2}3（約分）。\nlog_{7}3+log_{7}5=log_{7}15。'},{q:'log_{2}25+log_{2}28−log_{2}7=log_{2}k，求 k。',a:'25×28÷7=100，k=100。'}]},
+{u:'2-2',t:'用對數解指數方程式與不等式',k:'a^{x}=b → x=log_{a}b。\n不等式：把右邊寫成 a^{log_{a}b}，再比較。底數<1 時不等號反向。',
+e:{q:'解 3^{x-2}=15；解 3^{x}≥50。',a:'x−2=log_{3}15 → x=2+log_{3}15。\n底數 3>1：x≥log_{3}50。'},
+p:[{q:'解 5^{2x-1}=3；3^{2x}+3^{x}−6=0',a:'2x−1=log_{5}3 → x=(1+log_{5}3)/2。\n令 t=3^{x}：t^{2}+t−6=0 → t=2（t=−3 不合）→ x=log_{3}2。'},{q:'解 2^{x}≥500；(0.3)^{x}≤1/100',a:'x≥log_{2}500。\n底數<1 反向：x≥log_{0.3}(1/100)。'}]},
+{u:'2-2',t:'指數／對數的生活應用（複利、人口）',k:'列式 → 兩邊取 log（或用對數定義）→ 用計算機。\n複利：本利和=本金×(1+r)^{n}。求「至少幾年」要無條件進位。',
+e:{q:'10 萬元，年利率 1.5% 複利，幾年後超過 20 萬？',a:'10(1.015)^{n}>20 → n>log2/log1.015≈46.5，至少 47 年。'},
+p:[{q:'年利率改 1%，幾年後超過 20 萬？',a:'n>log2/log1.01≈69.7，至少 70 年。'},{q:'P(t)=1500·2^{0.7t}，人口至少到 30000 要幾年？',a:'2^{0.7x}=20 → x=log_{2}20/0.7≈6.2，至少 7 年。'}]},
+{u:'2-2',t:'估計大小：科學記號 a×10^{n}',k:'N=10^{log N}，拆成 10^{小數部分}×10^{整數部分}。\n整數 N=a×10^{n} 的位數是 n+1。\n小數 a×10^{-m}：從小數點後第 m 位開始不為 0。',
+e:{q:'2^{607}−1 約多少？幾位數？',a:'607×log2≈182.7252 → 10^{0.7252}×10^{182}≈5.311×10^{182}，共 183 位數。'},
+p:[{q:'估計 (1/3)^{300}，並問小數點後第幾位開始不為 0？',a:'−300·log3≈−143.136=0.864−144 → 約 7.305×10^{-144}，第 144 位。'}]},
+{u:'2-3',t:'對數函數 y=log_{a}x 的圖形性質',k:'定義域 x>0，值域全體實數。過 (1,0)。\na>1：遞增；0<a<1：遞減。圖形凹口向下（a>1 時）。\ny=log x 與 y=−log x 對稱 x 軸。log_{a}x=(1/log a)·log x。',
+e:{q:'比較 a=log_{3}5，b=log_{1/3}4，c=log_{9}16，d=0。',a:'換成 log：a=log5/log3，b=−log4/log3，c=log4/log3，d=0。因 log3>0，且 log 遞增：a>c>d>b。'},
+p:[{q:'比較 a=log0.7，b=0，c=log13，d=log√10。',a:'log0.7<0；log13≈1.11；log√10=0.5。所以 c>d>b>a。'},{q:'f(x)=log x 上兩點 A(a,r)、B(b,s)，b−a=3，b/a=100，求斜率。',a:'s−r=log(b/a)=2，斜率=2/3。'}]},
+{u:'2-3',t:'指數函數與對數函數互為反函數',k:'同底的 a^{x} 與 log_{a}x 圖形對稱於直線 y=x。\n點 (a,b) 在指數圖形上 ⟺ 點 (b,a) 在對數圖形上。',
+e:{q:'2^{x} 過 (3,8)，則 log_{2}x 過哪一點？',a:'坐標對調：(8,3)。'},
+p:[{q:'10^{x} 的圖形過 (0,1)，則 log x 的圖形過哪一點？',a:'(1,0)。'}]},
+{u:'2-3',t:'解對數方程式與不等式（先管真數>0）',k:'①先列「真數>0」的範圍 ②用對數律合併、用定義化成指數 ③解完要檢查是否符合範圍（不合要捨去）。\n不等式：a>1 方向不變，0<a<1 反向，並與真數>0 取交集。',
+e:{q:'解 log x+log(x−3)=1。',a:'真數：x>3。log[x(x−3)]=1 → x²−3x−10=0 → x=5 或 −2，−2 不合，x=5。'},
+p:[{q:'解 log(x+3)=2；log_{2}x+log_{2}(x−2)=3',a:'x+3=100 → x=97。\nx(x−2)=8 → x=4 或 −2；需 x>2，所以 x=4。'},{q:'解 log(3x−2)≥2；log_{2}x<log_{2}(x²+2)',a:'3x−2>0 且 3x−2≥100 → x≥34。\nx>0 且 x<x²+2（恆成立）→ x>0。'}]},
+{u:'2-3',t:'對數函數的應用',k:'給兩筆資料 → 代入求係數（解聯立）→ 再用模型解不等式。\n分貝：d=10·log(I/I₀)，I₀=10^{-12}。',
+e:{q:'P(t)=a−b·log_{2}t，P(2)=62，P(8)=26，求 a,b。',a:'a−b=62，a−3b=26 → b=18，a=80。'},
+p:[{q:'吹風機 60~80 分貝，聲音強度 I 約在什麼範圍？',a:'60=10log(I/10^{-12}) → I=10^{-6}；80 分貝 → I=10^{-4}。範圍 10^{-6}~10^{-4} W/m²。'}]}
+];
+const f=s=>s.replace(/\^\{([^}]*)\}/g,'<sup>$1</sup>').replace(/_\{([^}]*)\}/g,'<sub>$1</sub>').replace(/\n/g,'<br>');
+let S={},tab='全部';
+try{S=JSON.parse(localStorage.getItem('explog')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('explog',JSON.stringify(S))}catch(e){}};
+function set(i,v){S[i]=S[i]===v?0:v;save();draw()}
+function draw(){
+ const T=['全部','2-1 指數函數','2-2 對數與對數律','2-3 對數函數','🤔 待加強'];
+ document.getElementById('tabs').innerHTML=T.map(t=>`<button class="${t.startsWith(tab)?'on':''}" onclick="tab='${t.split(' ')[0]}';draw()">${t}</button>`).join('');
+ const done=C.filter((_,i)=>S[i]==1).length;
+ document.getElementById('pb').style.width=done/C.length*100+'%';
+ document.getElementById('pt').textContent=`已掌握 ${done} / ${C.length} 個概念；待加強 ${C.filter((_,i)=>S[i]==2).length} 個`;
+ let h='';
+ C.forEach((c,i)=>{
+  if(tab=='🤔'?S[i]!=2:(tab!='全部'&&c.u!=tab))return;
+  h+=`<section class="card s${S[i]||0}"><h2><span class="u">${c.u}</span>${f(c.t)}</h2>
+  <div class="k"><span class="lab">① 重點</span><br>${f(c.k)}</div>
+  <div class="q"><span class="lab">② 例題</span>　${f(c.e.q)}</div>
+  <details><summary>看解答</summary><div class="a">${f(c.e.a)}</div></details>
+  ${c.p.map((p,j)=>`<div class="q"><span class="lab">③ 隨堂練習 ${j+1}</span>　${f(p.q)}</div><details><summary>對答案</summary><div class="a">${f(p.a)}</div></details>`).join('')}
+  <div class="st"><button class="g ${S[i]==1?'on':''}" onclick="set(${i},1)">😀 我懂了</button><button class="r ${S[i]==2?'on':''}" onclick="set(${i},2)">🤔 再看看</button></div></section>`});
+ document.getElementById('m').innerHTML=h||'<div class="empty">這裡還沒有項目 🎉</div>';
+}
+draw();
+</script></body></html>
