@@ -29,6 +29,12 @@ details{margin:2px 0 8px}summary{cursor:pointer;color:var(--ac);font-size:14px}
 .st .g.on{background:var(--ok);color:#fff;border-color:var(--ok)}.st .r.on{background:var(--no);color:#fff;border-color:var(--no)}
 .empty{text-align:center;color:var(--mu);padding:30px}
 mjx-container{font-size:105%}
+.op{display:block;padding:6px 10px;margin:6px 0;border:1px solid var(--bd);border-radius:8px;cursor:pointer}
+.fb{font-size:16px;padding:6px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);width:150px;margin-top:6px}
+.sub{display:block;width:100%;padding:12px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-size:16px;cursor:pointer;margin:12px 0}
+.score{text-align:center;background:var(--ac2)}.big{font-size:36px;font-weight:700;color:var(--ac);line-height:1.3}
+.card.rt{border-left:6px solid var(--ok)}.card.wr{border-left:6px solid var(--no)}
+.fd{margin-top:8px;padding:6px 10px;background:var(--bg);border-radius:8px}
 </style></head><body>
 <header><h1>📘 指數與對數函數｜基本題複習</h1>
 <p>步驟：①看重點 → ②先自己算例題再看解 → ③做隨堂練習 → ④誠實按「懂了」或「再看看」。</p>
@@ -115,12 +121,12 @@ try{S=JSON.parse(localStorage.getItem('explog')||'{}')}catch(e){}
 const save=()=>{try{localStorage.setItem('explog',JSON.stringify(S))}catch(e){}};
 function set(i,v){S[i]=S[i]===v?0:v;save();draw()}
 function draw(){
- const T=['全部','2-1 指數函數','2-2 對數與對數律','2-3 對數函數','🤔 待加強'];
+ const T=['全部','2-1 指數函數','2-2 對數與對數律','2-3 對數函數','🤔 待加強','📝 測驗'];
  document.getElementById('tabs').innerHTML=T.map(t=>`<button class="${t.startsWith(tab)?'on':''}" onclick="tab='${t.split(' ')[0]}';draw()">${t}</button>`).join('');
  const done=C.filter((_,i)=>S[i]==1).length;
  document.getElementById('pb').style.width=done/C.length*100+'%';
  document.getElementById('pt').textContent=`已掌握 ${done} / ${C.length} 個概念；待加強 ${C.filter((_,i)=>S[i]==2).length} 個`;
- let h='';
+ if(tab=='📝'){drawQuiz();return}let h='';
  C.forEach((c,i)=>{
   if(tab=='🤔'?S[i]!=2:(tab!='全部'&&c.u!=tab))return;
   h+=`<section class="card s${S[i]||0}"><h2><span class="u">${c.u}</span>${c.t}</h2>
@@ -131,6 +137,55 @@ function draw(){
   <div class="st"><button class="g ${S[i]==1?'on':''}" onclick="set(${i},1)">😀 我懂了</button><button class="r ${S[i]==2?'on':''}" onclick="set(${i},2)">🤔 再看看</button></div></section>`});
  const m=document.getElementById('m');
  m.innerHTML=h||'<div class="empty">這裡還沒有項目 🎉</div>';
+ if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([m]);
+}
+const Q={
+'2-1':[
+{t:'mc',q:R`下列哪一組數據代表「指數型成長」？（$x=0,1,2,3$ 時的函數值）`,o:[R`$2,4,6,8$`,R`$3,6,12,24$`,R`$10,7,4,1$`,R`$1,4,9,16$`],a:1,e:R`只有 $3,6,12,24$ 每次都 $\times2$（等比）；其餘為等差或不成比例。`},
+{t:'mc',q:R`關於 $f(x)=(0.4)^x$ 的圖形，哪一個正確？`,o:[R`由左而右上升`,R`由左而右下降`,R`與 $x$ 軸有交點`,R`不通過 $(0,1)$`],a:1,e:R`底數 $0<0.4<1$，所以嚴格遞減；圖形在 $x$ 軸上方且通過 $(0,1)$。`},
+{t:'fb',q:R`解方程式 $3^x=243$，$x=$ ？`,a:['5'],e:R`$243=3^5$，所以 $x=5$。`},
+{t:'fb',q:R`某藥物半衰期 $3$ 小時，起初 $80$ mg，$9$ 小時後剩幾 mg？`,a:['10'],e:R`$9\div3=3$ 次半衰期：$80\times\left(\frac12\right)^3=10$。`},
+{t:'mc',q:R`解不等式 $\left(\frac12\right)^x>\frac18$，答案是？`,o:[R`$x>3$`,R`$x<3$`,R`$x>-3$`,R`$x<-3$`],a:1,e:R`$\frac18=\left(\frac12\right)^3$，底數 $<1$ 不等號反向，所以 $x<3$。`},
+{t:'fb',q:R`解方程式 $\left(\frac12\right)^x=\left(\frac14\right)^{x-1}$，$x=$ ？`,a:['2'],e:R`$\left(\frac12\right)^x=\left(\frac12\right)^{2x-2}$ → $x=2x-2$ → $x=2$。`}
+],
+'2-2':[
+{t:'fb',q:R`求 $\log_2 32$ 的值。`,a:['5'],e:R`$2^5=32$，所以 $\log_2 32=5$。`},
+{t:'mc',q:R`$\log4+\log25=$ ？`,o:[R`$2$`,R`$29$`,R`$\log29$`,R`$4$`],a:0,e:R`$\log(4\times25)=\log100=2$。`},
+{t:'fb',q:R`$\log_2 3\times\log_3 8=$ ？`,a:['3'],e:R`換底後約分：$\frac{\log3}{\log2}\times\frac{\log8}{\log3}=\log_2 8=3$。`},
+{t:'mc',q:R`若 $2^x=7$，則 $x=$ ？`,o:[R`$\log_7 2$`,R`$\log_2 7$`,R`$\frac72$`,R`$\log 7$`],a:1,e:R`依對數定義，$2^x=7 \iff x=\log_2 7$。`},
+{t:'fb',q:R`兩個地震的芮氏規模相差 $2$，能量大的是小的幾倍？（$\log E=11.8+1.5M$）`,a:['1000','10^3'],e:R`能量比 $=10^{1.5\times2}=10^3=1000$ 倍。`},
+{t:'mc',q:R`$\log_9 27=$ ？`,o:[R`$3$`,R`$\frac32$`,R`$\frac23$`,R`$\frac13$`],a:1,e:R`$27=3^3=9^{\frac32}$，所以 $\log_9 27=\frac32$。`}
+],
+'2-3':[
+{t:'mc',q:R`函數 $f(x)=\log_2 x$ 的定義域是？`,o:[R`所有實數`,R`$x>0$`,R`$x\ge0$`,R`$x<0$`],a:1,e:R`真數必須大於 $0$，所以定義域是 $x>0$。`},
+{t:'mc',q:R`$\log5,\ 0,\ \log0.5$ 的大小關係為？`,o:[R`$\log0.5>0>\log5$`,R`$\log5>0>\log0.5$`,R`$0>\log5>\log0.5$`,R`$\log5>\log0.5>0$`],a:1,e:R`$\log x$ 遞增且 $\log1=0$：$5>1$ 所以 $\log5>0$；$0.5<1$ 所以 $\log0.5<0$。`},
+{t:'fb',q:R`解方程式 $\log_2(x-1)=5$，$x=$ ？`,a:['33'],e:R`$x-1=2^5=32$，所以 $x=33$。`},
+{t:'mc',q:R`$y=2^x$ 與 $y=\log_2 x$ 的圖形對稱於？`,o:[R`$x$ 軸`,R`$y$ 軸`,R`直線 $y=x$`,R`原點`],a:2,e:R`同底的指數函數與對數函數互為反函數，圖形對稱於直線 $y=x$。`},
+{t:'fb',q:R`解方程式 $\log x+\log(x-3)=1$，$x=$ ？`,a:['5'],e:R`真數需 $x>3$。$x(x-3)=10$ → $x=5$ 或 $-2$，$-2$ 不合，所以 $x=5$。`},
+{t:'fb',q:R`解方程式 $\log(x+3)=2$，$x=$ ？`,a:['97'],e:R`$x+3=10^2=100$，所以 $x=97$。`},
+{t:'mc',q:R`解不等式 $\log(x-1)\le2$，解為？`,o:[R`$x\le101$`,R`$1<x\le101$`,R`$x\le100$`,R`$1<x\le100$`],a:1,e:R`真數 $x-1>0$；且 $x-1\le10^2=100$。合併得 $1<x\le101$。`}
+]};
+let qc='2-1',qa={},qs=false,qbest={};
+try{qbest=JSON.parse(localStorage.getItem('explogQ')||'{}')}catch(e){}
+const norm=s=>String(s==null?'':s).replace(/[\s$]/g,'').toLowerCase();
+const qok=(q,i)=>q.t=='mc'?qa[i]===q.a:q.a.some(x=>norm(x)==norm(qa[i]));
+function qpick(c){qc=c;qa={};qs=false;draw()}
+function qre(){qa={};qs=false;drawQuiz()}
+function qsub(){qs=true;const n=Q[qc].filter(qok).length;qbest[qc]=Math.max(qbest[qc]||0,n);try{localStorage.setItem('explogQ',JSON.stringify(qbest))}catch(e){}drawQuiz();window.scrollTo(0,0)}
+function drawQuiz(){
+ const L=Q[qc],nm={'2-1':'2-1 指數函數','2-2':'2-2 對數與對數律','2-3':'2-3 對數函數'};
+ let h=`<div class="card"><b>選擇測驗章節</b><div class="st">${Object.keys(Q).map(k=>`<button class="${k==qc?'g on':''}" onclick="qpick('${k}')">${nm[k]}${qbest[k]!=null?`<br><small>最高 ${qbest[k]}/${Q[k].length} 題</small>`:''}</button>`).join('')}</div></div>`;
+ if(qs){const n=L.filter(qok).length,sc=Math.round(n*100/L.length);
+  h+=`<div class="card score"><div class="big">${sc} 分</div>答對 ${n} / ${L.length} 題<br>${sc>=80?'🎉 很棒！觀念很穩了。':sc>=60?'👍 還不錯，看看錯的題目的解析。':'💪 建議回到上面的「重點」再複習，然後按「重做」再試一次。'}</div>`}
+ else h+=`<p style="color:var(--mu);font-size:14px">共 ${L.length} 題，每題 ${Math.round(100/L.length*10)/10} 分。填充題請輸入數字（可用分數如 3/2）。沒作答算錯。</p>`;
+ L.forEach((q,i)=>{const r=qok(q,i);
+  h+=`<div class="card ${qs?(r?'rt':'wr'):''}"><div class="q"><span class="lab">第 ${i+1} 題｜${q.t=='mc'?'選擇題':'填充題'}</span><br>${q.q}</div>`;
+  if(q.t=='mc')h+=q.o.map((o,j)=>`<label class="op"><input type="radio" name="q${i}" ${qa[i]===j?'checked':''} ${qs?'disabled':''} onchange="qa[${i}]=${j}"> ${'ABCD'[j]}. ${o}</label>`).join('');
+  else h+=`<input class="fb" type="text" inputmode="text" placeholder="輸入答案" value="${String(qa[i]||'').replace(/"/g,'&quot;')}" ${qs?'disabled':''} oninput="qa[${i}]=this.value">`;
+  if(qs)h+=`<div class="fd">${r?'✅ 答對了':'❌ 答錯了｜正確答案：'+(q.t=='mc'?'ABCD'[q.a]+'. '+q.o[q.a]:q.a[0])}<br>${q.e}</div>`;
+  h+='</div>'});
+ h+=qs?`<button class="sub" onclick="qre()">🔁 重做這一章</button>`:`<button class="sub" onclick="qsub()">交卷看分數</button>`;
+ const m=document.getElementById('m');m.innerHTML=h;
  if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([m]);
 }
 draw();
